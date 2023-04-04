@@ -1,0 +1,1036 @@
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+	<title>Eye On The Screen Hand On The Buzzer</title>
+
+<style>
+	
+    html {
+      touch-action: manipulation;
+    }   
+    a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+    }
+	
+	body {
+        margin: 0;
+        text-align: center;
+        color: #ffffff;
+        background-color: #222222;  /* 000033 */
+        font-family:'Roboto',sans-serif;
+	}
+
+    #launchScreen {
+		display: none; /*none , inline-block*/
+		margin:0 auto; /*center this div */
+        color: #ffffff;
+    }
+
+    .gameScreen {
+		display: none; /*none , block*/
+		position: relative;
+
+        width: 100vw;
+        left: 0px;
+		margin:0 auto; /*center this div */
+
+		top: 0px;
+		height: 100%; /*  800px */
+
+        color: #ffffff;
+	}
+
+    .footer {
+        position: fixed;
+        width: 100%;
+        bottom: 20px;
+        color: #cccccc;
+        background-color: #222222ad;
+	}
+
+    .header {
+        width: 100%;
+        top: 0px;
+        padding: 0px;
+        height: 45px;
+        color: #cccccc;
+        background-color: #222222ad;
+	}
+
+    img {
+        opacity: 0.85;
+        margin: 10px;
+
+    }
+
+    a:link, a:visited {
+        text-decoration: none;
+        color: #cccccc;
+    }
+   
+    .roomHeader {
+        display: inline-block;
+        width: 100%;
+    
+        padding: 5px 0px;
+        margin: 0px 0px;
+        color: #ffffff;
+        font-size: 30px;
+        background-color: #000000;  /* 000033 */
+     		
+	}
+
+    .playerNameSection {
+        display: inline-block;
+        color: #ffffff;
+        font-size:30px;	
+        font-weight: 600;
+        padding: 5px 0px 0px 0px;	
+	}
+
+    .teamNameSection {
+        display: inline-block;
+        width: 100%;
+        color: #ffffff;
+        font-size:20px;			
+	}
+
+    .buzzerSection {
+
+        height: 200px;
+        color: #ffffff;	
+	}
+
+
+    .hostBuzzerSwitchSection {
+        display: inline-block;
+        margin: 16px auto;	
+        		
+	}
+
+    .hostButtonSection {
+        display: inline-block;
+        width: 100%;
+        color: #ffffff;
+        margin: 16px auto;			
+	}
+
+    .hostLeaderboardSection {
+        display: inline-block;
+        margin: 5px auto;	
+        width: 100%;
+        color: #ffffff;		
+	}
+
+
+
+	
+	.alignright {float: right;  padding: 5px 10px;	top: 0px;}
+    .alignMiddle { padding: 5px 5px;	top: 6px;}
+    .alignleft  {	
+        float: left;
+        padding: 0px 5px 0px 5px;
+        font-family: 'Roboto',sans-serif;
+        text-transform: uppercase;
+        font-weight: 100;
+        font-size: 11px;
+        color: #ffffff;
+    }
+
+    .roomCodeStyle  {	
+        font-family: 'Roboto',sans-serif;
+        text-transform: uppercase;
+        font-weight: 400;
+        font-size: 20px;
+        color: yellow;
+    }
+
+
+    
+    .bigText {font-size:60px;	}
+    .smallText {font-size:15px;	padding-top: 2px;}
+    .centerButton { padding-top: 0px;}
+
+
+
+    button{
+        display:inline-block;
+        border-radius: 2em;
+        box-sizing: border-box;
+        border: 0;
+        outline: none;
+        text-decoration:none;
+        font-family:'Roboto',sans-serif;
+        text-transform:uppercase;
+        font-weight:400;
+        font-size: 15px;
+        color:#FFFFFF;
+        background-color:#3369ff;
+        box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+        text-align:center;
+        position:relative;
+        padding: 10px 25px;
+    }
+
+    .buttonGreen{
+        display:inline-block;
+        border-radius: 2em;
+        box-sizing: border-box;
+        border: 0;
+        outline: none;
+        text-decoration:none;
+        font-family:'Roboto',sans-serif;
+        text-transform:uppercase;
+        font-weight:400;
+        font-size: 15px;
+        color:#FFFFFF;
+        background-color:#3EB650;
+        box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+        text-align:center;
+        position:relative;
+        padding: 10px 25px;
+    }
+
+    .buttonGreenPressed { 
+            transform: scale(0.90); 
+            opacity: 0.50;
+            /* Scaling button to 0.98 to its original size */ 
+            box-shadow: 3px 2px 22px 1px rgba(43, 219, 8, 0.24); 
+            /* Lowering the shadow */ 
+    }
+
+    .blueOutline{
+        border: 1px solid #3369ff;
+    }
+
+    .greenOutline{
+        border: 1px solid #3EB650;
+    }
+
+
+    table {  
+		width: 300px; 
+		margin-left: auto;
+		margin-right: auto;
+		
+		border-collapse: collapse; /* IE7 and lower */
+    	border-spacing: 0;
+		
+		font-family: "fira-sans-2",sans-serif;
+		font-style: normal;
+		font-weight: 600;
+	    font-size: 12px;
+		color: #000033;
+		letter-spacing: 0px;
+	}
+	th {  
+		background: #FFCC33; 
+		font-weight: bold; 
+		height: 20px;
+		font-size: 12px;
+		color: #222222ad;
+	}
+	td {  
+		background: #FFFFFF; 
+		text-align: center;
+		height: 30px;
+	}
+	td:first-child {
+    	border-radius: 6px 0 0 0;
+		background: #7FE2B0; 
+	}
+
+    .myFormStyle{
+        max-width:300px;
+        margin:10px auto;
+        background:#222222;
+        border-radius:2px;
+        padding:10px;
+
+        max-height: 50vh;
+        overflow: hidden;
+        transition: max-height 0.5s ease-out;
+    }
+    h1{
+        display: block;
+        text-align: center;
+        padding: 0;
+        margin: 30px 0px 5px 0px;
+        color: #ffffff;
+        font-size:x-large;
+    }
+    .myFormStyle ul{
+        list-style:none;
+        padding:0;
+        margin:0;	
+    }
+    .myFormStyle li{
+        display: block;
+        padding: 9px;
+        margin-bottom: 15px;
+        border-radius: 3px;
+    }
+    .myFormStyle li:last-child{
+        border:none;
+        margin-bottom: 0px;
+        text-align: center;
+        padding: 0px;
+    }
+    .myFormStyle li > label{
+        display: block;
+        float: left;
+        margin-top: -19px;
+        background: #222222;
+        height: 14px;
+        padding: 2px 5px 2px 5px;
+        color: #CCCCCC;
+        font-size: 14px;
+        overflow: hidden;
+    }
+    .myFormStyle input[type="text"],
+    .myFormStyle textarea,
+    .myFormStyle select 
+    {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        width: 100%;
+        display: block;
+        outline: none;
+        border: none;
+        line-height: 25px;
+        font-size: 16px;
+        font-weight:bold;
+        padding: 6px;
+        text-transform: uppercase;
+    }
+
+    .myFormStyle li > span{
+        background: #222222;
+        display: block;
+        padding: 3px;
+        margin: 0 -9px -9px -9px;
+        text-align: center;
+        color: #999999;
+        font-size: 12px;
+    }
+    .myFormStyle textarea{
+        resize:none;
+    }
+    
+    .hostBuzzerLable {
+        float: left;
+        padding: 4px 10px 6px 0px;
+    }
+    .hostBuzzerLable2 {
+        float: right;
+        padding: 4px 0px 6px 10px;
+    }
+
+    .onoffswitch {
+        position: relative;
+        width: 70px;
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select: none;
+        user-select: none;
+        float: left;
+    }
+    .onoffswitch-checkbox {
+        display: none;
+    }
+    .onoffswitch-label {
+        display: block; overflow: hidden; cursor: pointer;
+        border-radius: 50px;
+    }
+    .onoffswitch-inner {
+        display: block; width: 200%; margin-left: -100%;
+        transition: margin 0.3s ease-in 0s;
+    }
+    .onoffswitch-inner:before, .onoffswitch-inner:after {
+        display: block; float: left; width: 50%; height: 28px; padding: 0; line-height: 28px;
+        font-size: 15px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+        box-sizing: border-box;
+    }
+    .onoffswitch-inner:before {
+        content: "ON";
+        padding-right: 20px;
+        background-color: #34C234; color: #FAFAFA;
+    }
+    .onoffswitch-inner:after {
+        content: "OFF";
+        padding-right: 8px;
+        background-color: #EEEEEE; color: #999999;
+        text-align: right;
+    }
+    .onoffswitch-switch {
+        display: block; width: 20px; margin: 4px;
+        background: #cccccc;
+        position: absolute; top: 0; bottom: 0;
+        right: 40px;
+        border-radius: 50px;
+        transition: all 0.3s ease-in 0s; 
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+        margin-left: 0;
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+        right: 0px; 
+    }
+
+
+    .buzzer {
+        position: relative;
+        color: white;
+        font-size: 50px;
+        height: 300px;
+        width: 300px;
+        background-color: rgb(185, 24, 24);
+        border: 5px solid #252523;
+        border-radius: 50%;
+        font-weight: 1000;
+        top: 5px;
+        outline: none;
+
+        -webkit-user-select: none;  /* Chrome all / Safari all */
+        -moz-user-select: none;     /* Firefox all */
+        -ms-user-select: none;      /* IE 10+ */
+        user-select: none; 
+
+    }
+
+    .horizontalCentering {
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        position: absolute;
+        top: 37%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        -webkit-transition: all 0.8s ease;
+        -moz-transition: all 0.8s ease;
+        transition: all 0.8s ease;
+}
+  
+        
+</style>
+		
+</head>
+
+<body onload="startGame()">
+
+    <div class="header">
+        <br><br>
+        <img src="https://i.pinimg.com/564x/97/37/fa/9737fac98cbdb90ebcecfffc073e0f7c.jpg" width="5%"/>
+    </div>
+
+    <div id ="launchScreen" class="horizontalCentering">
+             
+        <!--   LAUNCH PAGE -->
+        <div class="myFormStyle" id="navHost">
+
+            <ul>
+                <li class="blueOutline">
+                    <label for="roomTitle">EVENT NAME</label>
+                    <input type="text" id="roomTitle"  name="roomTitle" >
+                    <span id="roomTitleInstructions">Eye On The Screen Hand On The Buzzer</span>
+                </li>
+            
+                <li>
+                    <button onclick="makeCode()" type="button" >BEGIN</button>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!--   HOST PAGE -->
+    <div class="gameScreen" id ="hostScreen">
+
+        <div class="roomHeader">
+            <div class="centerButton">  <button onclick="logMeOut()" type="button" class="alignright">LOGOUT</button> </div>
+            <div class="alignleft"> 
+                <div>GAME CODE</div>
+                <div id="roomCodeHeaderCODE2" class="roomCodeStyle" >0000</div>
+            </div>
+            
+            <div id="roomCodeHeaderHOST" class="alignMiddle">GAME NAME</div>
+            
+        </div>
+
+
+        <div class="hostBuzzerSwitchSection">
+            <div class = "hostBuzzerLable"> Buzzers are </div> 
+            <div class="onoffswitch"> 
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" onclick="allowBuzzIns()" checked>
+                <label class="onoffswitch-label" for="myonoffswitch">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+            <div class = "hostBuzzerLable2"> (turn off to reset) </div> 
+        </div>
+
+        <div class="hostLeaderboardSection">
+            <div id ="leaderboard"> 
+                <table id ="leaderboardTable" border = "1">
+                    <tr>
+                        <th width = "50px"> </th>
+                        <th width = "186px">Ready</th>
+                        <th width = "93px"> </th>
+                    </tr>		
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="footer">
+        powered by <a href="https://crowdcontrolgames.com/">CrowdControlGames.com</a>
+    </div>
+    
+      
+
+
+</body>
+    
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+
+
+<script>
+
+    // CrowdControl Database***********************************
+    // Your web app's Firebase configuration 
+    var firebaseConfig = {
+        apiKey: "AIzaSyCvx3FleqQKMFGryjfq7tON3G5wzYM7iqU",
+        authDomain: "buzzer-3cb94.firebaseapp.com",
+        databaseURL: "https://buzzer-3cb94.firebaseio.com",
+        projectId: "buzzer-3cb94",
+        storageBucket: "buzzer-3cb94.appspot.com",
+        messagingSenderId: "526089533224",
+        appId: "1:526089533224:web:56d38733c038e2bd3f421d",
+        measurementId: "G-4TD5YQ9SJ2"
+    };
+   //*********************************************************
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+ // Initialize Cloud Firestore through Firebase
+ var db = firebase.firestore();	
+
+ var roomCode = "";
+ var secretCode = "";
+ var userType = ""; //[host, player]
+ var roomTitle = "";
+ var roomType = ""; //[free, QuizShow, Split, TriviaTime]
+
+
+ ////  S T A R T   G A M E  //////////////////////////////////////////////////////////////////////////////////////////////////
+    function startGame() {
+
+         //LOD MAIN MENU
+            document.getElementById('launchScreen').style.display = 'block';
+            document.getElementById('hostScreen').style.display = 'none';
+
+        console.log("startGame() ");
+
+        if (localStorage.roomCode) {
+
+            roomCode = localStorage.getItem("roomCode");
+            secretCode = localStorage.getItem("secretCode");
+            userType = localStorage.getItem("userType");
+            roomTitle = localStorage.getItem("roomTitle");
+            console.log("START GAME:: roomcode: "+roomTitle);
+            console.log("userType : : "+userType);
+
+
+            //check if ROOM is still on the server  
+            var docRef = db.collection("rooms").doc(roomCode);
+            docRef.get().then(function(doc) {
+                if (doc.exists) {
+                    console.log("FOUND ON SERVER - roomcode: "+roomTitle);
+                    roomExists = "yes";
+                    startGameHOST();
+                    
+
+                } else {
+                    console.log("NOT FOUND ON SERVER - roomcode: "+roomTitle);
+                    localStorage.removeItem("roomCode");
+                    localStorage.removeItem("secretCode");
+                    document.getElementById('launchScreen').style.display = 'block';
+                    document.getElementById('hostScreen').style.display = 'none';
+                }
+            });
+
+            
+        }else{
+            //LOD MAIN MENU
+            document.getElementById('launchScreen').style.display = 'block';
+            document.getElementById('hostScreen').style.display = 'none';
+
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    function startGameHOST() {
+
+        console.log("HOST & ROOMEXISTS" );
+
+        db.collection("rooms").doc(roomCode).get().then(function(doc) {
+            var secrectCheck =  doc && doc.data().secretCode;
+
+            console.log("Does "+secrectCheck+ " = "+secretCode );
+
+            if(secrectCheck == secretCode){
+                //Continue HOSTING game
+                document.getElementById('launchScreen').style.display = 'none';
+                document.getElementById('hostScreen').style.display = 'block';
+
+                document.getElementById("roomCodeHeaderCODE2").innerText = roomCode;
+                document.getElementById("roomCodeHeaderHOST").innerText = roomTitle;
+
+                ///// SET UP LEADERBOARD LISTENER --------------------------------------------------
+                db.collection('rooms').doc(roomCode)
+                .collection('players')
+                .orderBy("timeStamp", "asc")
+                .onSnapshot(function(querySnapshot) {
+                    console.log("startGame: Snapshot - leaderboard");
+
+                    console.log(" Update :: LEADERBOARD ");
+                    var leaderboardTable = document.getElementById("leaderboardTable");
+                        leaderboardTable.innerHTML = ""; //removes all data
+                    var tbody = document.createElement("tbody");
+
+                    console.log(" buzz = 0 ");
+                    ///HEADER -----
+                    var tr = document.createElement("tr");
+                                var td0 = document.createElement("th");
+                                    var txtRank = document.createTextNode("RANK of 0");
+                                    td0.style.width = "40px";
+                                td0.appendChild(txtRank);
+                            tr.appendChild(td0);
+                
+                            var td1 = document.createElement("th");
+                                    var txtName = document.createTextNode("NAME");
+                                td1.appendChild(txtName);
+                            tr.appendChild(td1);
+                
+                            var td2 = document.createElement("th");
+                                    var txtTeam= document.createTextNode("TEAM");
+                                td2.appendChild(txtTeam);
+                            tr.appendChild(td2);
+
+                    tbody.appendChild(tr);
+
+                    //loop thru records to make rows ...DATA!!
+                    var buzzRank = 0;
+                    /// DATA -----
+                    querySnapshot.forEach(function(doc) {	 /////// FOR EACH /////////
+                        console.log(" buzz > 0 ");
+                        var tr = document.createElement("tr");
+                            var td0 = document.createElement("td");
+                                buzzRank = buzzRank +1;
+                                var txtRank = document.createTextNode(buzzRank);
+                                td0.appendChild(txtRank);
+                            tr.appendChild(td0);
+
+                            var td1 = document.createElement("td");
+                                var txtName = document.createTextNode(doc.data().name);
+                                td1.appendChild(txtName);
+                            tr.appendChild(td1);
+
+                            var td2 = document.createElement("td");
+                                var txtTeam = document.createTextNode(doc.data().team);
+                                td2.appendChild(txtTeam);
+                        tr.appendChild(td2);   
+
+                        tbody.appendChild(tr);  
+                    });
+                    //create 1 blank row if no data
+                    // BLANK ------
+                    if(buzzRank == 0){
+                        var tr = document.createElement("tr");
+                                var td0 = document.createElement("td");
+                                    var txtRank = document.createTextNode("0");
+                                td0.appendChild(txtRank);
+                            tr.appendChild(td0);
+                
+                            var td1 = document.createElement("td");
+                                    var txtName = document.createTextNode(" ");
+                                td1.appendChild(txtName);
+                            tr.appendChild(td1);
+                
+                            var td2 = document.createElement("td");
+                                    var txtTeam= document.createTextNode(" ");
+                                td2.appendChild(txtTeam);
+                            tr.appendChild(td2);
+
+                        tbody.appendChild(tr);
+                    }
+
+                    leaderboardTable.appendChild(tbody);
+                    leaderboardTable.rows[0].cells[0].innerHTML = "RANK OF "+buzzRank;
+                });
+                ///////// end Leaderboard update -------------------------------------------------
+            }
+        });
+
+    }
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    function logMeOut(){
+        //Clear memory and go to Main Menu (Host or Join)
+        localStorage.removeItem("roomCode");
+        localStorage.removeItem("secretCode");
+        localStorage.clear();
+        document.getElementById('launchScreen').style.display = 'block';
+        document.getElementById('hostScreen').style.display = 'none';
+
+        //reset buzzer text
+        document.getElementById("myBuzzer").style.background='darkgray';
+        document.getElementById("myBuzzer").innerText = "ready";
+
+
+        //////
+        document.getElementById("btnPlayer").style.display = 'inline-block';
+        document.getElementById("btnHost").style.display = 'inline-block';
+
+        var contentHOST = document.getElementById("navHost");
+        var contentPLAYER = document.getElementById("navPlayer1");
+        var contentQS = document.getElementById("navPlayerQuizShow");
+        var contentFREE= document.getElementById("navPlayerFREE");
+            
+        //shrink ALL
+        contentHOST.style.maxHeight = null;
+        contentHOST.style.padding = "0px";
+
+        contentPLAYER.style.maxHeight = null;
+        contentPLAYER.style.padding = "0px";
+
+        contentQS.style.maxHeight = null;
+        contentQS.style.padding = "0px";
+
+        contentFREE.style.maxHeight = null;
+        contentFREE.style.padding = "0px";
+
+    }
+
+
+    function makeCode() {
+        document.getElementById("roomTitleInstructions").innerText = "Eye On The Screen Hand On The Buzzer";
+        document.getElementById('roomTitle').style.backgroundColor = 'white'; 
+
+        if(document.getElementById("roomTitle").value.length == 0){ //check if Room NAME populated
+            document.getElementById("roomTitleInstructions").innerText = "A GAME EVENT NAME is required";
+            document.getElementById('roomTitle').style.backgroundColor = 'red'; 
+        } else{
+            document.getElementById('launchScreen').style.display = 'none';
+            document.getElementById('hostScreen').style.display = 'block';
+            document.getElementById("roomCodeHeaderHOST").innerText = "...loading";
+            createRandomRoom();
+        }
+        
+    }
+    
+    //step 1
+    function createRandomRoom(){
+        roomCode             = '';
+        var characters       = '12345789BCDFGHJKLMNPQRSTVWXYZ';
+        for ( var i = 0; i < 4; i++ ) {
+            roomCode += characters.charAt(Math.floor(Math.random() * 29));  //this should get us 700,000 random codes
+        }
+        checkIfRoomUnique();
+        
+    }
+
+    //step 2
+    function checkIfRoomUnique(){
+        var docRef = db.collection("rooms").doc(roomCode);
+        docRef.get().then(function(doc) {
+            if (doc.exists) {
+                //its a duplicate
+                createRandomRoom();
+            } else {
+                createNewRoom();
+            }
+        });
+    };
+        
+    //step 3
+    function createNewRoom() {
+
+        //create SECRET CODE
+        secretCode             = '';
+        var characters2       = '12345789BCDFGHJKLMNPQRSTVWXYZ';
+        for ( var i = 0; i < 4; i++ ) {
+            secretCode += characters2.charAt(Math.floor(Math.random() * 29));  //this should get us 700,000 random codes
+        }
+
+        ///Send Secret Code to firebase
+        var roomTitle = document.getElementById("roomTitle").value.toUpperCase();
+        db.collection('rooms').doc(roomCode).set({
+
+            secretCode: secretCode,
+            buzzerStatus: "Login",
+            roomTitle: roomTitle,
+            roomType: "free"
+
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+       
+
+        ///Send Game code to Firebase///////////////////////////   
+        db.collection('rooms').doc(roomCode)
+        .collection('players').doc("Ready").set({
+
+            name: "READY",
+            team: ""
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+
+
+        document.getElementById("roomCodeHeaderHOST").innerText = roomTitle;
+        document.getElementById("roomCodeHeaderCODE2").innerText = roomCode;
+        localStorage.setItem("roomCode", roomCode);
+        localStorage.setItem("userType", "host"); // [host, player]
+        localStorage.setItem("secretCode", secretCode);
+        localStorage.setItem("roomTitle", roomTitle);
+        /////////
+
+                 
+        ///// SET UP LEADERBOARD LISTENER --------------------------------------------------
+        db.collection('rooms').doc(roomCode)
+        .collection('players')
+        .orderBy("timeStamp", "asc")
+        .onSnapshot(function(querySnapshot) {
+
+            console.log(" Snapshot Update :: LEADERBOARD ");
+            var leaderboardTable = document.getElementById("leaderboardTable");
+                leaderboardTable.innerHTML = ""; //removes all data
+            var tbody = document.createElement("tbody");
+
+            console.log(" buzz = 0 ");
+            ///HEADER -----
+            var tr = document.createElement("tr");
+                        var td0 = document.createElement("th");
+                            var txtRank = document.createTextNode("RANK of 0");
+                            td0.style.width = "40px";
+                        td0.appendChild(txtRank);
+                    tr.appendChild(td0);
+        
+                    var td1 = document.createElement("th");
+                            var txtName = document.createTextNode("NAME");
+                        td1.appendChild(txtName);
+                    tr.appendChild(td1);
+        
+                    var td2 = document.createElement("th");
+                            var txtTeam= document.createTextNode("TEAM");
+                        td2.appendChild(txtTeam);
+                    tr.appendChild(td2);
+
+            tbody.appendChild(tr);
+
+            //loop thru records to make rows ...DATA!!
+            var buzzRank = 0;
+            /// DATA -----
+            querySnapshot.forEach(function(doc) {	 /////// FOR EACH /////////
+                console.log(" buzz > 0 ");
+                var tr = document.createElement("tr");
+                    var td0 = document.createElement("td");
+                        buzzRank = buzzRank +1;
+                        var txtRank = document.createTextNode(buzzRank);
+                        td0.appendChild(txtRank);
+                    tr.appendChild(td0);
+
+                    var td1 = document.createElement("td");
+                        var txtName = document.createTextNode(doc.data().name);
+                        td1.appendChild(txtName);
+                    tr.appendChild(td1);
+
+                    var td2 = document.createElement("td");
+                        var txtTeam = document.createTextNode(doc.data().team);
+                        td2.appendChild(txtTeam);
+                tr.appendChild(td2);   
+
+                tbody.appendChild(tr);   
+            });
+
+            //create 1 blank row if no data
+            // BLANK ------
+            if(buzzRank == 0){
+                    var tr = document.createElement("tr");
+                        var td0 = document.createElement("td");
+                            var txtRank = document.createTextNode("1");
+                        td0.appendChild(txtRank);
+                    tr.appendChild(td0);
+        
+                    var td1 = document.createElement("td");
+                            var txtName = document.createTextNode(" ");
+                        td1.appendChild(txtName);
+                    tr.appendChild(td1);
+        
+                    var td2 = document.createElement("td");
+                            var txtTeam= document.createTextNode(" ");
+                        td2.appendChild(txtTeam);
+                    tr.appendChild(td2);
+
+                tbody.appendChild(tr);
+            }
+
+            leaderboardTable.appendChild(tbody);
+            leaderboardTable.rows[0].cells[0].innerHTML = "RANK OF "+buzzRank;
+        });
+        ///////// end Leaderboard update ------------------------------------------------------
+
+    };
+
+
+
+    ///////////////////////////////////////////////
+    function allowBuzzIns() {
+        roomTitle = document.getElementById("roomCodeHeaderHOST").innerText;
+
+        if(document.getElementById("myonoffswitch").checked == true){
+            //send "BUZZERS ON" signal to firebase
+            db.collection('rooms').doc(roomCode).update({
+            //secretCode: secretCode,
+            //roomTitle: roomTitle,
+            buzzerStatus: "ON"
+            
+            })
+            .catch(function(error) {
+            console.error("Error adding document: ", error);
+            });
+            
+        }
+
+        if(document.getElementById("myonoffswitch").checked == false){
+             //send "BUZZERS OFF" signal to firebase
+             db.collection('rooms').doc(roomCode).update({
+            //secretCode: secretCode,
+            //roomTitle: roomTitle,
+            buzzerStatus: "OFF"
+            })
+            .catch(function(error) {
+            console.error("Error adding document: ", error);
+            });
+
+            clearBuzzIns();
+
+        }
+    } 
+    //////////////////////////////////////////////////////////////////////
+
+
+    
+
+    //////DELETED VOTE COUNT DB records///////////////////////////////////
+    function clearBuzzIns() {
+
+        //check local, if Room ID and private ID (saved in memory) match.
+        console.log("RESET");
+        var removeRoom = document.getElementById("roomCodeHeaderCODE2").innerText;
+        var guessRefA = db.collection('rooms').doc(removeRoom).collection('players');
+        var batchSize = 500;	
+
+            
+        deleteCollection(db, guessRefA, batchSize);
+            
+        function deleteCollection(db, collectionRef, batchSize) {
+            var query = collectionRef.orderBy('__name__').limit(batchSize);
+
+            return new Promise(function(resolve, reject) {
+                deleteQueryBatch(db, query, batchSize, resolve, reject);
+            });
+        }
+
+
+        function deleteQueryBatch(db, query, batchSize, resolve, reject) {
+            query.get()
+                .then((snapshot) => {
+                    // When there are no documents left, we are done
+                    //document.getElementById("voteDeletsProgress").value = snapshot.size;
+                
+                    if (snapshot.size == 0) {
+                        return 0;
+                    }
+                    
+                    // Delete documents in a batch
+                    var batch = db.batch();
+                    snapshot.docs.forEach(function(doc) {
+                        batch.delete(doc.ref);
+                    });
+
+                    return batch.commit().then(function() {
+                        return snapshot.size;
+                    });
+                }).then(function(numDeleted) {
+                    if (numDeleted < batchSize) {
+                        resolve();
+                        return;
+                    }
+
+                    // Recurse on the next process tick, to avoid
+                    // exploding the stack.
+                    process.nextTick(function() {
+                        deleteQueryBatch(db, query, batchSize, resolve, reject);
+                    });
+                })
+                .catch(reject);
+    
+        }
+
+
+
+    }//end clearBuzzIns()
+        
+
+// NAV UI
+
+
+    //var buzzSFX = new Audio("CorrectAnswer03b.mp3"); // buffers automatically when created
+    //buzzSFX.play();
+
+	
+</script>
+
+	
+</html>
